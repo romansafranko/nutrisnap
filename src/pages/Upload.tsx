@@ -70,21 +70,24 @@ const Upload = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            {...getRootProps()}
-            className={`relative rounded-3xl border-2 border-dashed p-12 md:p-20 text-center cursor-pointer transition-smooth ${
-              isDragActive
-                ? "border-primary bg-primary/5 shadow-glow"
-                : "border-border hover:border-primary/60 bg-card"
-            }`}
           >
-            <input {...getInputProps()} />
-            <div className="mx-auto h-20 w-20 rounded-2xl bg-gradient-hero flex items-center justify-center shadow-glow mb-6 animate-float">
-              <UploadCloud className="h-10 w-10 text-primary-foreground" />
+            <div
+              {...getRootProps()}
+              className={`relative rounded-3xl border-2 border-dashed p-12 md:p-20 text-center cursor-pointer transition-smooth ${
+                isDragActive
+                  ? "border-primary bg-primary/5 shadow-glow"
+                  : "border-border hover:border-primary/60 bg-card"
+              }`}
+            >
+              <input {...getInputProps()} />
+              <div className="mx-auto h-20 w-20 rounded-2xl bg-gradient-hero flex items-center justify-center shadow-glow mb-6 animate-float">
+                <UploadCloud className="h-10 w-10 text-primary-foreground" />
+              </div>
+              <h2 className="font-display text-2xl font-semibold mb-2">
+                {isDragActive ? "Pusti fotku tu" : "Pretiahni alebo klikni"}
+              </h2>
+              <p className="text-muted-foreground">JPG, PNG alebo WEBP do 10 MB</p>
             </div>
-            <h2 className="font-display text-2xl font-semibold mb-2">
-              {isDragActive ? "Pusti fotku tu" : "Pretiahni alebo klikni"}
-            </h2>
-            <p className="text-muted-foreground">JPG, PNG alebo WEBP do 10 MB</p>
           </motion.div>
         )}
 
