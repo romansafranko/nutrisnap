@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "overrides": {
+    "react-day-picker": {
+      "date-fns": "$date-fns"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
