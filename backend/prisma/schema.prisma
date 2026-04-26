@@ -1,0 +1,48 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String   @id @default(uuid())
+  name             String
+  email            String   @unique
+  password         String
+  age              Int?
+  weightKg         Float?
+  heightCm         Float?
+  dailyCalorieGoal Int      @default(2000)
+  createdAt        DateTime @default(now())
+  meals            Meal[]
+}
+
+model Meal {
+  id        String     @id @default(uuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  calories  Float
+  protein   Float
+  fat       Float
+  carbs     Float
+  createdAt DateTime   @default(now())
+  items     MealItem[]
+}
+
+model MealItem {
+  id       String  @id @default(uuid())
+  mealId   String
+  meal     Meal    @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  name     String
+  emoji    String?
+  calories Float
+  protein  Float
+  fat      Float
+  carbs    Float
+}
