@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Camera, Sparkles, History, Target, ArrowRight } from "lucide-react";
@@ -15,9 +15,10 @@ const Landing = () => {
   const { login, register, user } = useAuth();
   const [mode, setMode] = useState<"login" | "register">("login");
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("demo@nutrisnap.app");
-  const [password, setPassword] = useState("demo1234");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+  const formRef = useRef<HTMLElement>(null);
 
   if (user) {
     navigate("/dashboard", { replace: true });
@@ -42,7 +43,10 @@ const Landing = () => {
     <div className="min-h-screen bg-gradient-soft">
       <header className="container flex items-center justify-between py-6">
         <Logo />
-        <Button variant="ghost" onClick={() => setMode("login")}>Prihlásiť sa</Button>
+        <Button variant="ghost" onClick={() => {
+          setMode("login");
+          formRef.current?.scrollIntoView({ behavior: "smooth" });
+        }}>Prihlásiť sa</Button>
       </header>
 
       <section className="container grid lg:grid-cols-2 gap-12 lg:gap-16 items-center pt-8 pb-20 lg:pt-12">
@@ -108,7 +112,7 @@ const Landing = () => {
         </motion.div>
       </section>
 
-      <section className="container pb-24">
+      <section ref={formRef} className="container pb-24">
         <div className="max-w-md mx-auto bg-card rounded-3xl shadow-card p-8 border border-border">
           <div className="flex gap-1 p-1 bg-muted rounded-xl mb-6">
             <button
@@ -145,11 +149,11 @@ const Landing = () => {
             )}
             <div className="space-y-1.5">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="jana.novakova@priklad.sk" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="password">Heslo</Label>
-              <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+              <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
             </div>
             <Button type="submit" variant="hero" size="lg" className="w-full mt-2" disabled={busy}>
               {busy ? "Moment..." : mode === "login" ? "Prihlásiť sa" : "Vytvoriť účet"}
